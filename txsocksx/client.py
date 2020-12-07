@@ -301,12 +301,13 @@ class SOCKS4Receiver(_SOCKSReceiver):
 
 
 class SOCKS4ClientProtocol(ParserProtocol):
+    source = OMeta(grammar.grammarSource).parseGrammar('Grammar')
+
     def __init__(self):
-        source = OMeta(grammar.grammarSource).parseGrammar('Grammar')
         bindings = grammar.bindings
         if bindings is None:
             bindings = {}
-        ParserProtocol.__init__(self, grammar=source,
+        ParserProtocol.__init__(self, grammar=self.source,
                                 senderFactory=SOCKS4Sender,
                                 receiverFactory=SOCKS4Receiver,
                                 bindings=bindings)
